@@ -68,7 +68,7 @@ class Parser(object):
         Parse a structured comment.
 
         :param comment: Structured comment of an Franca-IDL symbol to parse.
-        :return: OrderedDict of all comments. Key is Franca-IDL keyword, e.g. @description, value conatins the text.
+        :return: OrderedDict of all comments. Key is Franca-IDL keyword, e.g. @description, value contains the text.
         """
         keys = ['@description', '@author', '@deprecated', '@source_uri', '@source_alias', '@see', '@experimental']
 
@@ -589,17 +589,17 @@ class Parser(object):
     @staticmethod
     def p_union_def_1(p):
         """
-        union_def : UNION ID flag_defs '{' union_fields '}'
+        union_def : structured_comment UNION ID '{' union_fields '}'
         """
-        p[0] = ast.Union(name=p[2], fields=p[5], flags=p[3])
+        p[0] = ast.Union(name=p[3], fields=p[5], comments=p[1])
 
     # noinspection PyIncorrectDocstring
     @staticmethod
     def p_union_def_2(p):
         """
-        union_def : UNION ID EXTENDS fqn '{' union_fields '}'
+        union_def : structured_comment UNION ID EXTENDS fqn '{' union_fields '}'
         """
-        p[0] = ast.Union(name=p[2], fields=p[6], extends=p[4])
+        p[0] = ast.Union(name=p[3], fields=p[7], extends=p[5], comments=p[1])
 
     # noinspection PyIncorrectDocstring
     @staticmethod
